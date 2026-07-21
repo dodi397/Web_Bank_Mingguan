@@ -1,0 +1,51 @@
+{% extends "base_public.html" %}
+{% block content %}
+<div class="page-header" data-aos="fade-up">
+  <h2 class="fw-bold text-white">Simulasi Cicilan</h2>
+  <p class="text-white-50 mb-0">Hitung estimasi angsuran pinjaman Anda.</p>
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-6">
+    <div class="form-card">
+      <form method="post" id="simulasiForm">
+        <div class="mb-3">
+          <label class="form-label">Jumlah Pinjaman</label>
+          <input type="number" class="form-control" name="jumlah_pinjaman" id="jumlah_pinjaman" value="{{ request.form.get('jumlah_pinjaman', '10000000') }}" min="1" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Bunga per Minggu (%)</label>
+          <input type="number" class="form-control" name="bunga" id="bunga" value="{{ request.form.get('bunga', '2') }}" step="0.1" min="0" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Tenor (Minggu)</label>
+          <input type="number" class="form-control" name="tenor_minggu" id="tenor_minggu" value="{{ request.form.get('tenor_minggu', '12') }}" min="1" required>
+        </div>
+        <button class="btn btn-success w-100 rounded-pill py-2"><i class="bi bi-calculator me-2"></i>Hitung Simulasi</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="result-card h-100">
+      <div class="d-flex align-items-center gap-2 mb-3"><span class="result-icon"><i class="bi bi-clipboard-data"></i></span><h5 class="fw-bold mb-0">Hasil Simulasi</h5></div>
+      {% if hasil %}
+      <div class="result-grid">
+        <div><span>Jumlah Pinjaman</span><strong>{{ hasil.jumlah_pinjaman|rupiah }}</strong></div>
+        <div><span>Bunga</span><strong>{{ hasil.bunga }}% / minggu</strong></div>
+        <div><span>Tenor</span><strong>{{ hasil.tenor_minggu }} minggu</strong></div>
+      </div>
+      <div class="summary-box mt-3">
+        <span>Total Tagihan</span>
+        <h3>{{ hasil.total_tagihan|rupiah }}</h3>
+      </div>
+      <div class="summary-box alt mt-3">
+        <span>Angsuran per Minggu</span>
+        <h3>{{ hasil.angsuran_per_minggu|rupiah }}</h3>
+      </div>
+      {% else %}
+      <p class="text-muted mb-0">Masukkan data pinjaman untuk melihat estimasi angsuran.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
