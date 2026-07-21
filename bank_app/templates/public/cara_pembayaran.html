@@ -1,0 +1,41 @@
+{% extends "base_public.html" %}
+{% block content %}
+<div class="page-header" data-aos="fade-up">
+  <h2 class="fw-bold text-white">Cara Pembayaran</h2>
+  <p class="text-white-50 mb-0">Pilih metode pembayaran yang paling mudah untuk Anda.</p>
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-md-6" data-aos="zoom-in">
+    <div class="payment-card h-100">
+      <div class="payment-icon"><i class="bi bi-bank"></i></div>
+      <h4 class="fw-bold mt-3">Transfer Bank</h4>
+      <div class="account-box my-3">
+        <div class="fw-bold text-success">{{ payment_setting.bank_name }}</div>
+        <div class="account-number">{{ payment_setting.account_number }}</div>
+        <div class="text-muted small">{{ payment_setting.account_name }}</div>
+      </div>
+      <button class="btn btn-success rounded-pill" data-copy="{{ payment_setting.account_number }}"><i class="bi bi-copy me-2"></i>Copy Rekening</button>
+    </div>
+  </div>
+  <div class="col-md-6" data-aos="zoom-in">
+    <div class="payment-card h-100">
+      <div class="payment-icon"><i class="bi bi-qr-code-scan"></i></div>
+      <h4 class="fw-bold mt-3">QRIS</h4>
+      <div class="qris-box mt-3">
+        {% if payment_setting.qris_image %}
+        <div class="qris-image-wrap">
+          <img src="{{ url_for('static', filename='uploads/qris/' ~ payment_setting.qris_image) }}" alt="QRIS" class="img-fluid qris-image">
+        </div>
+        {% else %}
+        <div class="qris-placeholder">
+          <i class="bi bi-qr-code-scan"></i>
+          <span>{{ payment_setting.qris_label }}</span>
+        </div>
+        {% endif %}
+      </div>
+      <p class="text-muted mt-3 mb-0">Scan QRIS untuk pembayaran lebih mudah.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
