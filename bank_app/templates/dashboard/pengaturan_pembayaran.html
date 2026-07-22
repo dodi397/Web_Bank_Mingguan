@@ -1,0 +1,67 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="form-card">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+        <div>
+          <h5 class="fw-bold mb-1">Pengaturan Pembayaran</h5>
+          <p class="text-muted mb-0">Admin dapat mengubah nomor rekening dan QRIS yang tampil di halaman publik.</p>
+        </div>
+      </div>
+
+      <form method="post" enctype="multipart/form-data">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nama Bank</label>
+            <input type="text" name="bank_name" class="form-control" value="{{ setting.bank_name }}" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nomor Rekening</label>
+            <input type="text" name="account_number" class="form-control" value="{{ setting.account_number }}" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Nama Rekening</label>
+            <input type="text" name="account_name" class="form-control" value="{{ setting.account_name }}" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Label QRIS</label>
+            <input type="text" name="qris_label" class="form-control" value="{{ setting.qris_label }}" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Ganti Gambar QRIS</label>
+            <input type="file" name="qris_image" id="qris_image" class="form-control" accept="image/*">
+            <div class="form-text">Format yang didukung: PNG, JPG, JPEG, WEBP.</div>
+          </div>
+        </div>
+
+        <button class="btn btn-success rounded-pill px-4 mt-4">
+          <i class="bi bi-save me-2"></i>Simpan Perubahan
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="upload-preview h-100">
+
+      <h5 class="fw-bold mb-3">Pratinjau QRIS</h5>
+      <img
+        src="{% if setting.qris_image %}{{ url_for('static', filename='uploads/qris/' ~ setting.qris_image) }}{% endif %}"
+        alt="QRIS"
+        class="img-fluid rounded-4 qris-preview-img {% if not setting.qris_image %}d-none{% endif %}"
+        id="qrisPreview"
+      >
+      <div class="placeholder-box {% if setting.qris_image %}d-none{% endif %}" id="qrisPlaceholder">
+        <i class="bi bi-qr-code-scan"></i>
+        <p class="mb-0 mt-2">{% if setting.qris_image %}Pilih gambar QRIS baru untuk mengganti yang lama.{% else %}{{ setting.qris_label }}{% endif %}</p>
+      </div>
+      <div class="mt-4 account-box">
+        <div class="fw-bold text-success">{{ setting.bank_name }}</div>
+        <div class="account-number">{{ setting.account_number }}</div>
+        <div class="text-muted small">{{ setting.account_name }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
