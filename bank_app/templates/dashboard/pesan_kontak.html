@@ -1,0 +1,59 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="page-header mb-4">
+  <h2 class="fw-bold mb-1">Pesan Kontak</h2>
+  <p class="text-white-50 mb-0">Daftar pesan masuk dari halaman kontak publik.</p>
+</div>
+
+<div class="panel-card">
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Email / HP</th>
+          <th>Pesan</th>
+          <th>Status</th>
+          <th>Waktu</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in contact_messages %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td class="fw-semibold">{{ item.nama }}</td>
+          <td>
+            <div>{{ item.email or '-' }}</div>
+            <div class="text-muted small">{{ item.no_hp or '-' }}</div>
+          </td>
+          <td style="max-width:320px">
+            <div class="text-truncate">{{ item.pesan }}</div>
+          </td>
+          <td>
+            <span class="badge rounded-pill {% if item.status == 'Dibaca' %}bg-success-subtle text-success{% else %}bg-warning-subtle text-warning{% endif %}">{{ item.status }}</span>
+          </td>
+          <td class="text-nowrap">{{ item.created_at|tanggal }}</td>
+          <td class="text-nowrap">
+            <a href="{{ url_for('pesan_kontak.detail_pesan_kontak', message_id=item.id) }}" class="btn btn-outline-primary btn-sm rounded-pill">Detail</a>
+            {% if item.status != 'Dibaca' %}
+            <form action="{{ url_for('pesan_kontak.mark_read_pesan_kontak', message_id=item.id) }}" method="post" class="d-inline">
+              <button class="btn btn-outline-success btn-sm rounded-pill">Tandai Dibaca</button>
+            </form>
+            {% endif %}
+            <form action="{{ url_for('pesan_kontak.delete_pesan_kontak', message_id=item.id) }}" method="post" class="d-inline" onsubmit="return confirm('Hapus pesan ini?')">
+              <button class="btn btn-outline-danger btn-sm rounded-pill">Hapus</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="7" class="text-center text-muted py-4">Belum ada pesan masuk.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
