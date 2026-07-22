@@ -1,0 +1,55 @@
+:root{
+  --green-900:#0b5d2a;
+  --green-800:#0f7a37;
+  --green-700:#148a3f;
+  --green-600:#1ca24c;
+  --green-100:#eaf8ef;
+  --bg:#f3fbf5;
+  --text:#17311f;
+  --card:#ffffff;
+  --shadow:0 18px 50px rgba(19, 84, 39, .12);
+  --radius:24px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(36, 180, 78, .18), transparent 35%),
+    radial-gradient(circle at top right, rgba(20, 138, 63, .12), transparent 30%),
+    linear-gradient(180deg, #f8fff9 0%, #edf9ef 100%);
+}
+
+a{text-decoration:none}
+.btn{transition:.25s ease}
+.btn:hover{transform:translateY(-1px)}
+.rounded-4{border-radius:1.25rem !important}
+.rounded-5{border-radius:1.75rem !important}
+
+.navbar-glass{
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(16, 126, 55, .08);
+  box-shadow:0 8px 28px rgba(0,0,0,.04);
+}
+.brand-logo{
+  width:42px;height:42px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--green-700),var(--green-600));
+  color:#fff;box-shadow:0 12px 24px rgba(24,145,67,.25);
+}
+.navbar-brand{color:var(--green-900)!important}
+.nav-link{font-weight:600;color:#2a3d31!important}
+.nav-link.active,.nav-link:hover{color:var(--green-700)!important}
+
+.page-shell{min-height:100vh;display:flex;flex-direction:column}
+.footer-glass{
+  margin-top:auto;
+  background:linear-gradient(135deg,#0d5c2c,#0a3d1f);
+  color:#fff;
+}
+.footer-link{color:rgba(255,255,255,.78);transition:.2s}
+.footer-link:hover{color:#fff}
+
