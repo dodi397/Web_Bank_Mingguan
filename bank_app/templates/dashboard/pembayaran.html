@@ -1,0 +1,31 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="panel-card">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <h5 class="fw-bold mb-0">Riwayat Pembayaran</h5>
+    {% if loan %}<div class="text-muted">Pinjaman: {{ loan.kode_pinjaman }}</div>{% endif %}
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr><th>No</th><th>Kode Pinjaman</th><th>Minggu Ke</th><th>Tanggal Bayar</th><th>Jumlah Bayar</th><th>Sisa Tagihan</th><th>Metode</th></tr>
+      </thead>
+      <tbody>
+        {% for p in pembayaran_list %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ p.pinjaman.kode_pinjaman }}</td>
+          <td>{{ p.minggu_ke }}</td>
+          <td>{{ p.tanggal_bayar|tanggal }}</td>
+          <td>{{ p.jumlah_bayar|rupiah }}</td>
+          <td>{{ p.sisa_tagihan|rupiah }}</td>
+          <td>{{ p.metode }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center text-muted">Belum ada riwayat pembayaran.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
