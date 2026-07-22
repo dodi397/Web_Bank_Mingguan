@@ -1,0 +1,39 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="panel-card">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <h5 class="fw-bold mb-0">Data Pinjaman</h5>
+    <a href="{{ url_for('pinjaman.add_pinjaman') }}" class="btn btn-success rounded-pill"><i class="bi bi-plus-lg me-2"></i>Tambah Pinjaman</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr><th>No</th><th>Kode</th><th>Nasabah</th><th>Jumlah</th><th>Bunga</th><th>Tenor</th><th>Angsuran</th><th>Sisa</th><th>Status</th><th>Aksi</th></tr>
+      </thead>
+      <tbody>
+        {% for p in pinjaman_list %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ p.kode_pinjaman }}</td>
+          <td>{{ p.nasabah.nama }}</td>
+          <td>{{ p.jumlah_pinjaman|rupiah }}</td>
+          <td>{{ p.bunga }}%</td>
+          <td>{{ p.tenor_minggu }} minggu</td>
+          <td>{{ p.angsuran_per_minggu|rupiah }}</td>
+          <td>{{ p.sisa_tagihan|rupiah }}</td>
+          <td><span class="badge rounded-pill {{ p.status|badge }}">{{ p.status }}</span></td>
+          <td class="d-flex gap-2">
+            <a href="{{ url_for('pinjaman.edit_pinjaman', pinjaman_id=p.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <form method="post" action="{{ url_for('pinjaman.delete_pinjaman', pinjaman_id=p.id) }}" onsubmit="return confirm('Hapus pinjaman ini?')">
+              <button class="btn btn-sm btn-outline-danger">Hapus</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="10" class="text-center text-muted">Belum ada data pinjaman.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
