@@ -1,0 +1,18 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="form-card">
+  <h5 class="fw-bold mb-4">Detail Konfirmasi</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><strong>Nama Pengirim:</strong> {{ konfirmasi.nama_pengirim }}</div>
+    <div class="col-md-6"><strong>Kode Pinjaman:</strong> {{ konfirmasi.pinjaman.kode_pinjaman }}</div>
+    <div class="col-md-6"><strong>Tanggal Transfer:</strong> {{ konfirmasi.tanggal_transfer|tanggal }}</div>
+    <div class="col-md-6"><strong>Nominal:</strong> {{ konfirmasi.nominal|rupiah }}</div>
+    <div class="col-md-6"><strong>Bank Pengirim:</strong> {{ konfirmasi.bank_pengirim }}</div>
+    <div class="col-md-6"><strong>Status:</strong> <span class="badge rounded-pill {{ konfirmasi.status|badge }}">{{ konfirmasi.status }}</span></div>
+    <div class="col-12">
+      <strong>Bukti Transfer:</strong><br>
+      <img src="{{ url_for('static', filename='uploads/bukti_transfer/' ~ konfirmasi.bukti_transfer) }}" class="img-fluid rounded-4 mt-2" style="max-height:420px;">
+    </div>
+  </div>
+</div>
+{% endblock %}
