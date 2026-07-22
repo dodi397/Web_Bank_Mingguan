@@ -1,0 +1,42 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="panel-card">
+  <h5 class="fw-bold mb-3">Konfirmasi Transfer</h5>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr><th>No</th><th>Tanggal</th><th>Nama Pengirim</th><th>Kode Pinjaman</th><th>Nominal</th><th>Status</th><th>Bukti</th><th>Aksi</th></tr>
+      </thead>
+      <tbody>
+        {% for k in konfirmasi_list %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ k.tanggal_transfer|tanggal }}</td>
+          <td>{{ k.nama_pengirim }}</td>
+          <td>{{ k.pinjaman.kode_pinjaman }}</td>
+          <td>{{ k.nominal|rupiah }}</td>
+          <td><span class="badge rounded-pill {{ k.status|badge }}">{{ k.status }}</span></td>
+          <td>
+            <a href="{{ url_for('static', filename='uploads/bukti_transfer/' ~ k.bukti_transfer) }}" target="_blank" class="btn btn-sm btn-outline-secondary">Lihat</a>
+          </td>
+          <td class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('konfirmasi.detail_konfirmasi', konfirmasi_id=k.id) }}" class="btn btn-sm btn-outline-primary">Detail</a>
+            {% if k.status == 'Menunggu' %}
+            <form method="post" action="{{ url_for('konfirmasi.accept_konfirmasi', konfirmasi_id=k.id) }}">
+              <button class="btn btn-sm btn-success">Terima</button>
+            </form>
+            <form method="post" action="{{ url_for('konfirmasi.reject_konfirmasi_route', konfirmasi_id=k.id) }}">
+              <input type="hidden" name="keterangan" value="Data transfer tidak sesuai.">
+              <button class="btn btn-sm btn-danger">Tolak</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" class="text-center text-muted">Belum ada konfirmasi transfer.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
