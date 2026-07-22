@@ -1,0 +1,100 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="stats-grid" data-aos="fade-up">
+  {% for key, label, icon in [
+    ('total_nasabah', 'Total Nasabah', 'bi-people'),
+    ('total_pinjaman', 'Total Pinjaman', 'bi-cash-stack'),
+    ('pinjaman_aktif', 'Pinjaman Aktif', 'bi-clock-history'),
+    ('pinjaman_lunas', 'Pinjaman Lunas', 'bi-check-circle-fill'),
+    ('konfirmasi_menunggu', 'Konfirmasi Menunggu', 'bi-hourglass-split'),
+    ('total_dana', 'Total Dana Dipinjamkan', 'bi-wallet2'),
+    ('total_pembayaran', 'Pembayaran Masuk', 'bi-cash-coin'),
+    ('total_konfirmasi', 'Total Konfirmasi', 'bi-inboxes')
+  ] %}
+  <div class="stat-card">
+    <div class="stat-icon"><i class="bi {{ icon }}"></i></div>
+    <div>
+      <div class="stat-label">{{ label }}</div>
+      <div class="stat-value">
+        {% if key in ['total_dana', 'total_pembayaran'] %}
+          {{ stats[key] | rupiah }}
+        {% else %}
+          {{ stats[key] }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-6" data-aos="fade-up">
+    <div class="panel-card">
+      <h5 class="fw-bold mb-3">Grafik Pinjaman per Bulan</h5>
+      <canvas id="monthlyChart" height="130"></canvas>
+    </div>
+  </div>
+  <div class="col-lg-6" data-aos="fade-up">
+    <div class="panel-card">
+      <h5 class="fw-bold mb-3">Grafik Pembayaran Mingguan</h5>
+      <canvas id="weeklyChart" height="130"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-6" data-aos="fade-up">
+    <div class="panel-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0">Pinjaman Terbaru</h5>
+        <a href="{{ url_for('pinjaman.list_pinjaman') }}" class="btn btn-sm btn-outline-success rounded-pill">Lihat Semua</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <thead><tr><th>Kode</th><th>Nasabah</th><th>Status</th><th>Sisa</th></tr></thead>
+          <tbody>
+            {% for item in loans[:5] %}
+            <tr>
+              <td>{{ item.kode_pinjaman }}</td>
+              <td>{{ item.nasabah.nama }}</td>
+              <td><span class="badge rounded-pill {{ item.status|badge }}">{{ item.status }}</span></td>
+              <td>{{ item.sisa_tagihan|rupiah }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" class="text-center text-muted">Belum ada data.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6" data-aos="fade-up">
+    <div class="panel-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0">Konfirmasi Terbaru</h5>
+        <a href="{{ url_for('konfirmasi.list_konfirmasi') }}" class="btn btn-sm btn-outline-success rounded-pill">Lihat Semua</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <thead><tr><th>Nama Pengirim</th><th>Pinjaman</th><th>Status</th></tr></thead>
+          <tbody>
+            {% for item in confirmations[:5] %}
+            <tr>
+              <td>{{ item.nama_pengirim }}</td>
+              <td>{{ item.pinjaman.kode_pinjaman }}</td>
+              <td><span class="badge rounded-pill {{ item.status|badge }}">{{ item.status }}</span></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3" class="text-center text-muted">Belum ada data.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.dashboardChartData = {{ charts | tojson }};
+</script>
+{% endblock %}
