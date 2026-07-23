@@ -1,0 +1,75 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="form-card">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+        <div>
+          <h5 class="fw-bold mb-1">Pengaturan Kontak</h5>
+          <p class="text-muted mb-0">Ubah alamat, nomor telepon, dan email yang tampil di halaman publik.</p>
+        </div>
+      </div>
+
+      <form method="post">
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Alamat</label>
+            <textarea name="address" class="form-control" rows="3" required>{{ setting.address }}</textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nomor Telepon</label>
+            <input type="text" name="contact_phone" class="form-control" value="{{ setting.contact_phone }}" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" name="contact_email" class="form-control" value="{{ setting.contact_email }}" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Catatan Singkat</label>
+            <textarea name="contact_note" class="form-control" rows="4" placeholder="Contoh: Jam operasional, media sosial, atau keterangan tambahan.">{{ setting.contact_note or '' }}</textarea>
+          </div>
+        </div>
+
+        <button class="btn btn-success rounded-pill px-4 mt-4">
+          <i class="bi bi-save me-2"></i>Simpan Perubahan
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="info-panel h-100">
+      <h5 class="fw-bold mb-3">Pratinjau Kontak Publik</h5>
+      <div class="contact-preview">
+        <div class="contact-preview-item">
+          <i class="bi bi-geo-alt"></i>
+          <div>
+            <span>Alamat</span>
+            <strong>{{ setting.address }}</strong>
+          </div>
+        </div>
+        <div class="contact-preview-item">
+          <i class="bi bi-telephone"></i>
+          <div>
+            <span>Telepon</span>
+            <strong>{{ setting.contact_phone }}</strong>
+          </div>
+        </div>
+        <div class="contact-preview-item">
+          <i class="bi bi-envelope"></i>
+          <div>
+            <span>Email</span>
+            <strong>{{ setting.contact_email }}</strong>
+          </div>
+        </div>
+      </div>
+      {% if setting.contact_note %}
+      <div class="mt-4 p-3 rounded-4 border bg-light-subtle">
+        <div class="fw-semibold mb-2">Catatan</div>
+        <p class="mb-0 text-muted">{{ setting.contact_note }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
