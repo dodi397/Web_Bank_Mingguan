@@ -1,0 +1,23 @@
+.sidebar-link-logout{
+    margin-top:auto;
+    color:#fff;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    border-radius:16px;
+}
+
+.sidebar-link-logout i{
+    color:#fff;
+}
+
+.sidebar-link-logout:hover,
+.sidebar-link-logout.active{
+    background:rgba(255,255,255,.08);
+    color:#fff;
+}
+
+.sidebar-link-logout:hover i,
+.sidebar-link-logout.active i{
+    color:#fff;
+}

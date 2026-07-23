@@ -1,0 +1,100 @@
+.qris-image-wrap{
+  min-height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+  background:linear-gradient(180deg,#f7fff8,#effaf1);
+  border:2px dashed rgba(20,138,63,.28);
+  border-radius:22px;
+}
+.qris-image{
+  max-height:300px;
+  width:100%;
+  object-fit:contain;
+  border-radius:18px;
+}
+.qris-preview-img{
+  max-height:360px;
+  width:100%;
+  object-fit:contain;
+  border:1px solid rgba(16,126,55,.08);
+  background:#fff;
+  padding:1rem;
+}
+
+
+
+.contact-preview{display:grid;gap:1rem}
+.contact-preview-item{
+  display:flex;gap:.9rem;align-items:flex-start;
+  padding:1rem 1.05rem;
+  border-radius:18px;
+  background:linear-gradient(180deg,#f7fff8,#edf8ef);
+  border:1px solid rgba(20,138,63,.1);
+}
+.contact-preview-item i{
+  width:38px;height:38px;border-radius:12px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(20,138,63,.12);
+  color:var(--green-700);
+  font-size:1.05rem;
+  flex:0 0 auto;
+}
+.contact-preview-item span{
+  display:block;
+  font-size:.82rem;
+  color:#6c7f72;
+}
+.contact-preview-item strong{
+  display:block;
+  color:#17311f;
+  font-size:1rem;
+  line-height:1.35;
+}
+
+.detail-message-card{
+  max-width:980px;
+  margin-inline:auto;
+}
+.detail-meta-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.9rem;
+}
+.detail-meta-item{
+  padding:1rem 1.05rem;
+  border-radius:16px;
+  background:linear-gradient(180deg,#f7fff8,#eef8ef);
+  border:1px solid rgba(16,126,55,.08);
+}
+.detail-meta-item span{
+  display:block;
+  font-size:.82rem;
+  color:#6a7d70;
+  margin-bottom:.25rem;
+}
+.detail-meta-item strong{
+  display:block;
+  font-size:1rem;
+  word-break:break-word;
+}
+.detail-section-label{
+  font-weight:700;
+  margin-bottom:.5rem;
+  color:#223b2b;
+}
+.detail-message-box{
+  padding:1rem 1.05rem;
+  border-radius:16px;
+  background:#fff;
+  border:1px solid rgba(16,126,55,.08);
+  white-space:pre-wrap;
+  line-height:1.7;
+}
+
+@media (max-width: 767.98px){
+  .detail-meta-grid{grid-template-columns:1fr}
+}
+
+
